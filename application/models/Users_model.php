@@ -11,4 +11,18 @@ class Users_model extends CI_Model {
         $query = $this->db->get('users');
         return $query->result_array();
     }
+
+    public function create_user()
+    {
+    $this->load->helper('url');
+
+    $data = array(
+        'first_name' => $this->input->post('first_name'),
+        'last_name' => $this->input->post('last_name'),
+        'email' => $this->input->post('email')
+    );
+    
+        return $this->db->insert('users', $data);
+    }
+
 }
