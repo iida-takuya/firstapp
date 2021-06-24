@@ -14,14 +14,15 @@ class Users_model extends CI_Model {
 
     public function create_user()
     {
-    $this->load->helper('url');
-
-    $data = array(
-        'first_name' => $this->input->post('first_name'),
-        'last_name' => $this->input->post('last_name'),
-        'email' => $this->input->post('email')
-    );
-
+        $this->load->helper('url');
+    
+        $data = array(
+            'first_name' => $this->input->post('first_name'),
+            'last_name' => $this->input->post('last_name'),
+            'email' => $this->input->post('email'),
+            'phone_number' => $this->input->post('phone_number')
+        );
+    
         return $this->db->insert('users', $data);
     }
 
@@ -30,16 +31,28 @@ class Users_model extends CI_Model {
         $data = array(
             'first_name' => $this->input->post('first_name'),
             'last_name' => $this->input->post('last_name'),
-            'email' => $this->input->post('email')
+            'email' => $this->input->post('email'),
+            'phone_number' => $this->input->post('phone_number')
         );
 
         $this->db->where('id', $user_id);
         return $this->db->update('users', $data);
     }
 
+    public function get_user($user_id) 
+    {
+        $data = $this->db->where('id', $user_id)->get('users');
+        return $data->row();
+    }
+
     public function delete_user($user_id)
     {
         return $this->db->where('id', $user_id)->delete('users');
+    }
+
+    public function delete_users($user_ids)
+    {
+        return $this->db->where_in('id', $user_ids)->delete('users');
     }
 
 }
